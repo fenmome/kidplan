@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: kidplan-backend
+    restart: unless-stopped
+    environment:
+      - ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin123}
+      - JWT_SECRET=${JWT_SECRET:-your-secret-key-change-in-production}
+      - DATABASE_PATH=/app/data/kidplan.db
+      - DEFAULT_REMINDER_MINUTES=${DEFAULT_REMINDER_MINUTES:-10}
+    volumes:
+      - ./data:/app/data
+    networks:
+      - kidplan-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: kidplan-frontend
+    restart: unless-stopped
+    ports:
+      - "${KIDPLAN_PORT:-8080}:80"
+    depends_on:
+      - backend
+    networks:
+      - kidplan-network
+
+networks:
+  kidplan-network:
+    driver: bridge
