@@ -247,6 +247,19 @@ const handleSave = async () => {
 
   await formRef.value.validate(async (valid) => {
     if (valid) {
+      // 检查时间冲突
+      const hasConflict = scheduleStore.hasTimeConflict(
+        form.value.weekday,
+        form.value.start_time,
+        form.value.end_time,
+        isEdit.value ? props.schedule.id : null
+      )
+
+      if (hasConflict) {
+        ElMessage.error('该时间段与其他日程有冲突，请选择其他时间')
+        return
+      }
+
       saveLoading.value = true
       try {
         // 处理数据

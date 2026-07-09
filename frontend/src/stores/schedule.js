@@ -76,6 +76,30 @@ export const useScheduleStore = defineStore('schedule', () => {
     calculateWeekDates(offset)
   }
 
+  // 检查时间段是否冲突
+  function hasTimeConflict(weekday, startTime, endTime, excludeId = null) {
+    const daySchedules = schedulesByWeekday.value[weekday] || []
+
+    const newStart = timeToMinutes(startTime)
+    const newEnd = timeToMinutes(endTime)
+
+    return daySchedules.some(s => {
+      if (excludeId && s.id === excludeId) return false
+
+      const existingStart = timeToMinutes(s.start_time)
+      const existingEnd = timeToMinutes(s.end_time)
+
+      // 检查是否有重叠
+      return (newStart < existingEnd && newEnd > existingStart)
+    })
+  }
+
+  // 辅助函数：时间字符串转分钟
+  function timeToMinutes(timeStr) {
+    const [hours, minutes] = timeStr.split(':').map(Number)
+    return hours * 60 + minutes
+  }
+
   return {
     schedules,
     currentWeekOffset,
@@ -87,7 +111,8 @@ export const useScheduleStore = defineStore('schedule', () => {
     updateSchedule,
     deleteSchedule,
     copyToNextWeek,
-    setWeekOffset
+    setWeekOffset,
+    hasTimeConflict
   }
 })
 
