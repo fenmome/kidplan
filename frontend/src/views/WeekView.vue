@@ -98,14 +98,23 @@ const router = useRouter()
 const authStore = useAuthStore()
 const scheduleStore = useScheduleStore()
 
-// 时间槽（6:00 - 22:00）
-const timeSlots = Array.from({ length: 17 }, (_, i) => i + 6)
+// 配置项：日程开始时间和结束时间（小时）
+const SCHEDULE_CONFIG = {
+  startHour: 8,    // 8点开始
+  endHour: 22      // 22点结束
+}
+
+// 时间槽（8:00 - 22:00）
+const timeSlots = Array.from(
+  { length: SCHEDULE_CONFIG.endHour - SCHEDULE_CONFIG.startHour + 1 },
+  (_, i) => i + SCHEDULE_CONFIG.startHour
+)
 
 // 弹窗状态
 const modalVisible = ref(false)
 const editingSchedule = ref(null)
 const initialWeekday = ref(1)
-const initialStartTime = ref('09:00')
+const initialStartTime = ref('08:00')
 
 // 计算属性
 const weekDates = computed(() => scheduleStore.weekDates)

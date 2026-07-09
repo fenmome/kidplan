@@ -36,7 +36,7 @@
               v-model="form.start_time"
               :max-time="form.end_time"
               placeholder="开始时间"
-              start="06:00"
+              start="08:00"
               step="00:15"
               end="22:00"
               style="width: 100%"
@@ -50,7 +50,7 @@
               v-model="form.end_time"
               :min-time="form.start_time"
               placeholder="结束时间"
-              start="06:00"
+              start="08:00"
               step="00:15"
               end="22:30"
               style="width: 100%"
@@ -139,7 +139,7 @@ const props = defineProps({
   },
   initialStartTime: {
     type: String,
-    default: "09:00",
+    default: "08:00",
   },
 });
 
@@ -174,8 +174,8 @@ const labelWidth = computed(() => {
 const form = ref({
   title: "",
   weekday: 1,
-  start_time: "09:00",
-  end_time: "10:00",
+  start_time: "08:00",
+  end_time: "09:00",
   remark: "",
   reminder_enabled: true,
   reminder_minutes: 10,
