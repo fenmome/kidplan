@@ -335,10 +335,12 @@ onMounted(() => {
   background: #f5f7fa;
 }
 
+/* 移动端适配 */
 @media (max-width: 768px) {
   .toolbar {
     flex-direction: column;
     gap: 12px;
+    padding: 12px 16px;
   }
 
   .left-actions,
@@ -346,17 +348,74 @@ onMounted(() => {
     width: 100%;
     justify-content: center;
     flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .right-actions .el-button {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .week-range {
+    font-size: 14px;
+  }
+
+  .calendar-container {
+    padding: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .calendar-header {
+    min-width: 600px;
+  }
+
+  .calendar-body {
+    min-width: 600px;
   }
 
   .time-column,
   .time-label {
-    width: 50px;
+    width: 45px;
+    padding: 6px 4px;
+    font-size: 11px;
+  }
+
+  .day-column {
+    min-width: 80px;
     padding: 8px 4px;
   }
 
-  .day-column,
+  .weekday {
+    font-size: 13px;
+  }
+
+  .date {
+    font-size: 10px;
+  }
+
   .time-cell {
     min-width: 80px;
+  }
+
+  .time-row {
+    min-height: 60px;
+  }
+}
+
+/* 超小屏幕 */
+@media (max-width: 480px) {
+  .calendar-header,
+  .calendar-body {
+    min-width: 520px;
+  }
+
+  .day-column {
+    min-width: 65px;
+  }
+
+  .time-cell {
+    min-width: 65px;
   }
 }
 </style>

@@ -42,12 +42,16 @@ const blockStyle = computed(() => {
   const endHour = parseInt(endParts[0])
   const endMin = parseInt(endParts[1])
 
+  // 检测是否是移动端
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768
+  const hourHeight = isMobile ? 60 : 80 // 移动端每小时60px，桌面端80px
+
   // 计算持续时间（分钟）
   const duration = (endHour - startHour) * 60 + (endMin - startMin)
-  const height = Math.max(duration * (80 / 60), 40) // 每小时80px
+  const height = Math.max(duration * (hourHeight / 60), isMobile ? 30 : 40)
 
   // 计算顶部偏移（如果有分钟偏移）
-  const topOffset = startMin * (80 / 60)
+  const topOffset = startMin * (hourHeight / 60)
 
   return {
     height: `${height}px`,
@@ -163,5 +167,47 @@ const blockStyle = computed(() => {
   right: 4px;
   font-size: 12px;
   opacity: 0.7;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .schedule-block {
+    left: 2px;
+    right: 2px;
+    border-radius: 4px;
+    padding: 4px 5px;
+    font-size: 11px;
+  }
+
+  .schedule-title {
+    font-size: 11px;
+    margin-bottom: 1px;
+  }
+
+  .schedule-time {
+    font-size: 9px;
+  }
+
+  .no-reminder-icon {
+    top: 2px;
+    right: 2px;
+    font-size: 10px;
+  }
+}
+
+/* 超小屏幕 */
+@media (max-width: 480px) {
+  .schedule-block {
+    padding: 3px 4px;
+    font-size: 10px;
+  }
+
+  .schedule-title {
+    font-size: 10px;
+  }
+
+  .schedule-time {
+    font-size: 8px;
+  }
 }
 </style>

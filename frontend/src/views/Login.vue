@@ -128,4 +128,29 @@ const handleLogin = async () => {
   color: #909399;
   font-size: 14px;
 }
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .login-container {
+    padding: 16px;
+  }
+
+  .login-box {
+    padding: 24px;
+    max-width: 100%;
+  }
+
+  .login-header {
+    margin-bottom: 20px;
+  }
+
+  .login-header h1 {
+    font-size: 24px;
+    margin: 12px 0 6px;
+  }
+
+  .login-header p {
+    font-size: 13px;
+  }
+}
 </style>
